@@ -65,29 +65,33 @@ const create = (req, res) => {
 };
 
 const showList = (req, res) => {
-  let consult = Article.find({});
 
-  if (req.params.ultimos) {
-    consult.limit(3);
-  }
+  setTimeout(()=>{
+    let consult = Article.find({});
+  
+    if (req.params.ultimos) {
+      consult.limit(3);
+    }
+  
+    consult
+      .sort({ date: -1 })
+      .exec()
+      .then((Article) => {
+        return res.status(200).json({
+          status: "success",
+          counter: Article.length,
+          article: Article,
+        });
+      })
+      .catch((error) => {
+        return res.status(404).send({
+          status: "error",
+          message: "NO SE HAN ENCONTRADO ARTICULOS : 404",
+          error,
+        });
+      });
 
-  consult
-    .sort({ date: -1 })
-    .exec()
-    .then((Article) => {
-      return res.status(200).json({
-        status: "success",
-        counter: Article.length,
-        article: Article,
-      });
-    })
-    .catch((error) => {
-      return res.status(404).send({
-        status: "error",
-        message: "NO SE HAN ENCONTRADO ARTICULOS : 404",
-        error,
-      });
-    });
+  }, 2000);
 };
 
 const single = (req, res) => {
