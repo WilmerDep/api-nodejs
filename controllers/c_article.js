@@ -66,7 +66,6 @@ const create = (req, res) => {
 
 const showList = (req, res) => {
 
-  setTimeout(()=>{
     let consult = Article.find({});
   
     if (req.params.ultimos) {
@@ -90,8 +89,6 @@ const showList = (req, res) => {
           error,
         });
       });
-
-  }, 2000);
 };
 
 const single = (req, res) => {
